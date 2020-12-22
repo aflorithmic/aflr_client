@@ -7,7 +7,7 @@ class AFLRClient:
     def __init__(self, api_key):
         self.api_key = api_key
         self.socket = None
-        self.loop = asyncio.get_event_loop()
+        self.loop = self.get_set_event_loop()
         self.latest_url = None
 
     async def get_speech_output(self, ssml, voice):
@@ -28,3 +28,12 @@ class AFLRClient:
     def synthesize_speech(self, ssml, voice):
         self.loop.run_until_complete(self.get_speech_output(ssml, voice))
         return self.latest_url if self.latest_url != None else "Invalid API Key"
+
+    def get_set_event_loop(self):
+        try:
+            return asyncio.get_event_loop()
+        except RuntimeError as e:
+            if e.args[0].startswith("There is no current event loop"):
+                asyncio.set_event_loop(asyncio.new_event_loop())
+                return asyncio.get_event_loop()
+            raise e
