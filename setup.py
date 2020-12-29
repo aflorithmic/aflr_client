@@ -9,12 +9,12 @@ if __name__ == "__main__":
     ms = find_packages(where=".")
     setup(
         name="aflr_client",
-        version="0.0.1",
+        version="0.0.2",
         description="Aflorithmic Client",
         url="git@https://github.com/aflorithmic/aflr_client.git",
         author="Aflorithmic Team",
         author_email="volodymyr@aflorithmic.ai",
-        license="unlicense",
+        license="MIT",
         packages=find_packages(),
         install_requires=reqs.strip().split("\n"),
         include_package_data=True,
